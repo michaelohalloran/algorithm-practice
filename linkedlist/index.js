@@ -194,7 +194,23 @@ class LinkedList {
         //wire incoming to next
         newNode.next = next;
     }
-    // forEach() {}
+    
+    forEach(fn) {
+        //loop through nodes
+        let node = this.head;
+        while(node) {
+            fn(node);
+            node = node.next;
+        }
+    }
+
+    *[Symbol.iterator]() {
+        let node = this.head;
+        while(node) {
+            yield node;
+            node = node.next;
+        }
+    }
 
 }
 
