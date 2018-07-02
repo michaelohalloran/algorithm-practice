@@ -38,16 +38,40 @@ class Node {
 }
 
 class Tree {
-    constructor(root = null) {
-        this.root = root;
+    constructor() {
+        this.root = null;
     }
 
-    traverseBF() {
-        //go left to right, calling siblings
+    traverseBF(fn) {
+        //push root into array
+        let arr = [this.root];
+        //while there's something in the array...
+        while(arr.length > 0) {
+            //take out the first element
+            let firstEl = arr.shift();
+            
+            //push its children into the array
+            for(let i = 0; i < firstEl.children.length; i++) {
+                arr.push(firstEl.children[i]);
+            }
+            fn(firstEl);
+        }
+
     }
-    traverseDF() {
-        //get to bottom of tree, calling children
+
+    traverseDF(fn) {
+        const arr = [this.root];
+        while(arr.length) {
+            const first = arr.shift();
+            arr.unshift(...first.children);
+            fn(first);
+        }
     }
 }
+
+//example of making node, and then a tree with this node as its root:
+//const node = new Node(7);
+//const Tree = new Tree();
+//Tree.root = node;
 
 module.exports = { Tree, Node };
